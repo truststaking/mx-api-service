@@ -1,3 +1,5 @@
+import { DefaultAzureCredential } from '@azure/identity';
+import { SecretClient } from '@azure/keyvault-secrets';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { PublicAppModule } from './public.app.module';
@@ -36,6 +38,7 @@ import { SettingsService } from './common/settings/settings.service';
 import { StatusCheckerModule } from './crons/status.checker/status.checker.module';
 import { JwtOrNativeAuthGuard } from '@multiversx/sdk-nestjs-auth';
 import { WebSocketPublisherModule } from './common/websockets/web-socket-publisher-module';
+import configuration from 'config/configuration';
 
 async function bootstrap() {
   const logger = new Logger('Bootstrapper');
@@ -43,6 +46,16 @@ async function bootstrap() {
   // @ts-ignore
   LoggerInitializer.initialize(logger);
 
+  const setAzSecrets = async () => {
+    const credential = new DefaultAzureCredential();
+    const keyVaultUrl = configuration()?.keyVault?.url;
+
+    const keyVaultClient = new SecretClient(keyVaultUrl, credential);
+    process.env.REDIS_SECRET = (
+      await keyVaultClient.getSecret('AzRedisPassword')
+    )?.value;
+  };
+  await setAzSecrets();
   const apiConfigApp = await NestFactory.create(ApiConfigModule);
   const apiConfigService = apiConfigApp.get<ApiConfigService>(ApiConfigService);
 
@@ -55,7 +68,7 @@ async function bootstrap() {
 
     await configurePublicApp(publicApp, apiConfigService);
 
-    await publicApp.listen(3001);
+    await publicApp.listen(8080);
 
     const websocketPublisherApp = await NestFactory.createMicroservice<MicroserviceOptions>(
       WebSocketPublisherModule,
@@ -63,6 +76,7 @@ async function bootstrap() {
         transport: Transport.REDIS,
         options: {
           host: apiConfigService.getRedisUrl(),
+          password: process.env.REDIS_SECRET,
           port: 6379,
           retryAttempts: 100,
           retryDelay: 1000,
@@ -141,6 +155,7 @@ async function bootstrap() {
       transport: Transport.REDIS,
       options: {
         host: apiConfigService.getRedisUrl(),
+        password: process.env.REDIS_SECRET,
         port: 6379,
         retryAttempts: 100,
         retryDelay: 1000,

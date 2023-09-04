@@ -2,26 +2,26 @@ network: 'mainnet'
 metaChainShardId: 4294967295
 api:
   public: true
-  private: true
+  private: false
 cron:
-  transactionProcessor: true
+  transactionProcessor: false
   transactionProcessorMaxLookBehind: 1000
   transactionCompleted: false
   transactionCompletedMaxLookBehind: 100
-  transactionBatch: true
+  transactionBatch: false
   transactionBatchMaxLookBehind: 100
-  cacheWarmer: true
+  cacheWarmer: false
   fastWarm: false
-  queueWorker: true
+  queueWorker: false
   elasticUpdater: false
   statusChecker: false
 flags:
-  useRequestCaching: true
-  useKeepAliveAgent: true
+  useRequestCaching: false
+  useKeepAliveAgent: false
   useTracing: false
   useRequestLogging: false
   useVmQueryTracing: false
-  processNfts: true
+  processNfts: false
   indexer-v3: false
   collectionPropertiesFromGateway: false
 features:
@@ -74,7 +74,7 @@ urls:
   gateway:
     - 'https://gateway.multiversx.com'
   verifier: 'https://play-api.multiversx.com'
-  redis: '127.0.0.1'
+  redis: 'trustmarket.redis.cache.windows.net'
   rabbitmq: 'amqp://127.0.0.1:5672'
   providers: 'https://delegation-api.multiversx.com/providers'
   delegation: 'https://delegation-api.multiversx.com'
@@ -84,6 +84,8 @@ urls:
   ipfs: 'https://ipfs.io/ipfs'
   socket: 'socket-fra.elrond.com'
   maiarId: 'https://id-api.multiversx.com'
+keyVault:
+  url: https://trustmarketvault.vault.azure.net/
 indexer:
   type: 'elastic'
   maxPagination: 10000

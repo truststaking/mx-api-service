@@ -27,6 +27,7 @@ export class DynamicModuleUtils {
         new RedisCacheModuleOptions(
           {
             host: apiConfigService.getRedisUrl(),
+            password: process.env.REDIS_SECRET,
           },
           {
             poolLimit: apiConfigService.getPoolLimit(),
@@ -46,6 +47,7 @@ export class DynamicModuleUtils {
       imports: [ApiConfigModule],
       useFactory: (apiConfigService: ApiConfigService) => new RedisCacheModuleOptions({
         host: apiConfigService.getRedisUrl(),
+        password: process.env.REDIS_SECRET,
         connectTimeout: 10000,
       }),
       inject: [ApiConfigService],
