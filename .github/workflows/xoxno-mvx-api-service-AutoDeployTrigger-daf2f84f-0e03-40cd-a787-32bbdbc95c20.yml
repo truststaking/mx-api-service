@@ -7,7 +7,7 @@ on:
     branches: 
       [ xoxno-version ]
     paths:
-    - '//**'
+    - '**'
     - '.github/workflows/xoxno-mvx-api-service-AutoDeployTrigger-daf2f84f-0e03-40cd-a787-32bbdbc95c20.yml'
 
   # Allow mannually trigger 
