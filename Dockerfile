@@ -4,6 +4,7 @@ COPY package.json package-lock.json ./
 RUN npm ci --force
 COPY . .
 RUN npm run init
+RUN npm run prebuild
 RUN npm run build --if-present
 RUN npm run copy-mainnet-config:nix
 
