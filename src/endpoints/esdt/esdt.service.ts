@@ -261,7 +261,9 @@ export class EsdtService {
 
         continue;
       }
-
+      if(!valueEncoded) {
+        continue;
+      }
       const role = BinaryUtils.base64Decode(valueEncoded);
       TokenHelpers.setTokenRole(currentAddressRoles, role);
     }
