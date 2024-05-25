@@ -72,7 +72,7 @@ urls:
   elastic:
     - 'https://index.multiversx.com'
   gateway:
-    - 'https://gateway.xoxno.com'
+    - 'https://xoxno-gateway-mainnet.whitemushroom-c526f76e.westeurope.azurecontainerapps.io'
   verifier: 'https://play-api.multiversx.com'
   redis: 'trustmarket.redis.cache.windows.net'
   rabbitmq: 'amqp://127.0.0.1:5672'

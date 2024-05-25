@@ -73,7 +73,7 @@ urls:
   elastic:
     - 'https://devnet-index.elrond.com'
   gateway:
-    - 'https://devnet-gateway.multiversx.com'
+    - 'https://xoxno-gateway-devnet.whitemushroom-c526f76e.westeurope.azurecontainerapps.io'
   verifier: 'https://play-api.multiversx.com'
   redis: '127.0.0.1'
   rabbitmq: 'amqp://127.0.0.1:5672'
